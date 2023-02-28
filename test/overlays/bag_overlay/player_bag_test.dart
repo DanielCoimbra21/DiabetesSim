@@ -1,59 +1,122 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_test/flutter_test.dart';
-// import 'package:seriousgame/a_overlays/a2_bag_overlay/player_bag_manager.dart';
-// import 'package:seriousgame/d_game_scenes/game_scene_generator.dart';
+import 'package:flame/game.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:seriousgame/a_overlays/a1_game_overlays/a1_1_game_bundles/a1_1_1_game_bundle_left/a1_1_1_1_sound/sound_button_controller.dart';
+import 'package:seriousgame/a_overlays/a1_game_overlays/a1_1_game_bundles/a1_1_1_game_bundle_left/a1_1_1_3_configuration/config_button_controller.dart';
+import 'package:seriousgame/a_overlays/a1_game_overlays/a1_1_game_bundles/a1_1_1_game_bundle_left/a1_1_1_4_game_dialogs/dialog_controller.dart';
+import 'package:seriousgame/a_overlays/a2_bag_overlay/measure_tool_controller.dart';
+import 'package:seriousgame/a_overlays/a2_bag_overlay/player_bag_manager.dart';
+import 'package:seriousgame/a_overlays/a4_feedback/feedback_controller.dart';
+import 'package:seriousgame/b_game_objects/b2_map_objects/b3_bag_objects/contact_controller.dart';
+import 'package:seriousgame/b_game_objects/b2_map_objects/b3_bag_objects/contact_onBag.dart';
+import 'package:seriousgame/d_game_scenes/game_base.dart';
+import 'package:seriousgame/d_game_scenes/game_scene_generator.dart';
+import 'package:seriousgame/e_game_controllers/e_1_scenes_controller/game_scenes_controller.dart';
+import 'package:seriousgame/e_game_controllers/e_2_score_controller/player_score_controller.dart';
+import 'package:seriousgame/e_game_controllers/e_3_bag_controller/notes_controller.dart';
+import 'package:seriousgame/e_game_controllers/e_3_bag_controller/player_bag_controller.dart';
 
+Widget makeTestableWidget(Widget child) {
+  return MaterialApp(
+    home: child,
+  );
+}
 
+void main() {
+  group('Player Bag Widget tests', () {
+    final GameScenesController gameController = GameScenesController();
+    final GameSoundController gameSoundController = GameSoundController();
+    final PlayerBagController bagController = PlayerBagController();
+    final PlayerScoreController scoreController = PlayerScoreController();
+    final GameDialogController gameDialogController = GameDialogController();
+    final FeedBackController feedBackController = FeedBackController();
+    final ConfigButtonController configButtonController =
+        ConfigButtonController();
+    final MeasureToolController measureToolController = MeasureToolController();
+    final ContactsController contactsController = ContactsController();
+    final NotesController notesController = NotesController();
 
-// Widget makeTestableWidget(Widget child) {
-//   return MaterialApp(
-//     home: child,
-//   );
-// }
+    gameController.gameSoundController = gameSoundController;
+    gameController.bagController = bagController;
+    gameController.scoreController = scoreController;
+    gameController.gameDialogController = gameDialogController;
+    gameController.configButtonController = configButtonController;
+    gameController.notesController = notesController;
+    gameController.measureToolController = measureToolController;
+    gameController.contactsController = contactsController;
+    gameController.feedBackController = feedBackController;
 
-// void main() {
-//   group('Player Bag Widget tests', () {
-//     testWidgets('Tabs and close button are correctly rendered', (tester) async {
-//       DiabeteGameScene diabeteGame = DiabeteGameScene();
-//       await tester.pumpWidget(makeTestableWidget(PlayerBag(game: diabeteGame)));
+    gameController.start();
+    bagController.start();
+    scoreController.start();
+    gameSoundController.start();
+    configButtonController.start();
+    feedBackController.start();
 
-//       // Check there are 5 tabs icons
-//       expect(find.byIcon(Icons.health_and_safety), findsOneWidget);
-//       expect(find.byIcon(Icons.calendar_month), findsOneWidget);
-//       expect(find.byIcon(Icons.person), findsOneWidget);
-//       expect(find.byIcon(Icons.email), findsOneWidget);
-//       expect(find.byIcon(Icons.school), findsOneWidget);
+    testWidgets('Tabs and close button are correctly rendered', (tester) async {
+      DiabeteGameScene diabeteGame = DiabeteGameScene(
+        sceneTmx: 'assets/tmx/scene_1.tmx',
+        sceneName: 'scene_1',
+        previousMissionName: 'mission_1',
+        gameScenesController: gameController,
+        soundTrackName: 'assets/sounds/scene_1.mp3',
+        gameSoundController: gameSoundController,
+      );
 
-//       // Close button is also displayed
-//       expect(find.byIcon(Icons.close), findsOneWidget);
-//     });
+      await tester.pumpWidget(makeTestableWidget(PlayerBag(
+        game: diabeteGame,
+        gameScenesController: gameController,
+        playerBagController: bagController,
+      )));
 
-//     testWidgets('Tap on Tabs', (tester) async {
-//       DiabeteGame diabeteGame = DiabeteGame();
-//       await tester.pumpWidget(makeTestableWidget(PlayerBag(game: diabeteGame)));
+      // Check there are 5 tabs icons
+      expect(find.byIcon(Icons.health_and_safety), findsOneWidget);
+      expect(find.byIcon(Icons.calendar_month), findsOneWidget);
+      expect(find.byIcon(Icons.person), findsOneWidget);
+      expect(find.byIcon(Icons.email), findsOneWidget);
+      expect(find.byIcon(Icons.school), findsOneWidget);
 
-//       // Should initiate on first tab
-//       expect(find.text('Outils de mesure'), findsOneWidget);
+      // Close button is also displayed
+      expect(find.byIcon(Icons.close), findsOneWidget);
+    });
 
-//       // Second tab
-//       await tester.tap(find.byIcon(Icons.calendar_month));
-//       await tester.pumpAndSettle();
-//       expect(find.text('Planning de la journée'), findsOneWidget);
+    testWidgets('Tap on Tabs', (tester) async {
+      DiabeteGameScene diabeteGame = DiabeteGameScene(
+        sceneTmx: 'assets/tmx/scene_1.tmx',
+        sceneName: 'scene_1',
+        previousMissionName: 'mission_1',
+        gameScenesController: gameController,
+        soundTrackName: 'assets/sounds/scene_1.mp3',
+        gameSoundController: gameSoundController,
+      );
+      await tester.pumpWidget(makeTestableWidget(PlayerBag(
+        game: diabeteGame,
+        gameScenesController: gameController,
+        playerBagController: bagController,
+      )));
 
-//       // Third tab
-//       await tester.tap(find.byIcon(Icons.person));
-//       await tester.pumpAndSettle();
-//       expect(find.text('Situations des patients'), findsOneWidget);
+      // Should initiate on first tab
+      expect(find.text('Outils de mesure :'), findsOneWidget);
 
-//       // Fourth tab
-//       await tester.tap(find.byIcon(Icons.email));
-//       await tester.pumpAndSettle();
-//       expect(find.text('Liste des professionnels'), findsOneWidget);
+      // Second tab
+      await tester.tap(find.byIcon(Icons.calendar_month));
+      await tester.pumpAndSettle();
+      expect(find.text('Patients du village'), findsOneWidget);
 
-//       // Last tab
-//       await tester.tap(find.byIcon(Icons.school));
-//       await tester.pumpAndSettle();
-//       expect(find.text('Collection d\'apprentissages'), findsOneWidget);
-//     });
-//   });
-// }
+      // Third tab
+      await tester.tap(find.byIcon(Icons.person));
+      await tester.pumpAndSettle();
+      expect(find.text('Situations des patients'), findsOneWidget);
+
+      // Fourth tab, find contactview widget
+      await tester.tap(find.byIcon(Icons.email));
+      await tester.pumpAndSettle();
+      expect(find.byType(ContactView), findsOneWidget);
+
+      // Last tab
+      await tester.tap(find.byIcon(Icons.school));
+      await tester.pumpAndSettle();
+      expect(find.text("collection d'apprentissage"), findsOneWidget);
+    });
+  });
+}

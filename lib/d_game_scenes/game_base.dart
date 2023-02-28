@@ -58,7 +58,6 @@ abstract class DiabeteGameBase extends FlameGame with SingleGameInstance {
   late final Guy01 guy01;
   late final Guy02 guy02;
 
-
   // Game controller
   GameScenesController gameScenesController;
 

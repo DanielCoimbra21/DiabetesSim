@@ -99,6 +99,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  canvas_test:
+    dependency: "direct dev"
+    description:
+      name: canvas_test
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0"
   characters:
     dependency: transitive
     description:
