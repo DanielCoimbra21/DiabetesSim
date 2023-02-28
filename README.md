@@ -7,6 +7,10 @@
 - Nadir Zemrani: [Nadirius](https://github.com/Nadirius)
 - Rémi Cohu: [remi-16](https://github.com/remi-16)
 
+- Daniel Coimbra
+- Daniel Pinto de Matos
+- Natal Bumman
+
 ## Documentation
 Some documentation can be found here :
 - [User guide](doc/user_guide/main.pdf)
