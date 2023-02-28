@@ -1,11 +1,19 @@
 # Diabete game
 
 ## Contributors
+- Daniel Coimbra : [DanielCoimbra21](https://github.com/DanielCoimbra21)
+- Daniel Pinto de Matos
+- Natal Bumann
+
+
+
 - Antony Marques: [antonymarques](https://github.com/antonymarques)
 - Stéphanie Baechler: [asytahFIG](https://github.com/asytahFIG)
 - Jonathan Kung: [Jonathan-Kung](https://github.com/Jonathan-Kung)
 - Nadir Zemrani: [Nadirius](https://github.com/Nadirius)
 - Rémi Cohu: [remi-16](https://github.com/remi-16)
+
+
 
 ## Documentation
 Some documentation can be found here :
