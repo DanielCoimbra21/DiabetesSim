@@ -22,7 +22,7 @@ class SliderScoreOverlay extends StatelessWidget {
               quarterTurns: 3,
               child: SliderTheme(
                 data: SliderThemeData(
-                  activeTrackColor: getColorIndicator(score.data as double),
+                  activeTrackColor: getColorIndicator(score.data! + 0.0),
                   trackShape: const RectangularSliderTrackShape(),
                   inactiveTrackColor: ColorManager.primary,
                   thumbColor: Colors.amber.shade300,
@@ -34,7 +34,7 @@ class SliderScoreOverlay extends StatelessWidget {
                   min: 0,
                   max: 100,
                   divisions: 100,
-                  value: score.data as double,
+                  value: score.data! + 0.0,
                   onChanged: (_) {},
                 ),
               ),
